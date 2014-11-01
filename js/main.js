@@ -12,3 +12,10 @@ form.addEventListener('keydown', function(e){
 		text.value = '';
 	}
 });
+
+function resize(e) {
+	document.body.style.height = window.innerHeight+'px';
+}
+
+window.addEventListener('resize', resize);
+resize();
