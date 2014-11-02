@@ -1,5 +1,6 @@
 function Flow(el) {
 	var self = this,
+		wrap = document.createElement('div'),
 		total = 0,
 		current = 0,
 		slides = el.querySelectorAll('li'),
@@ -10,10 +11,14 @@ function Flow(el) {
 			height: slides[0].clientHeight
 		};
 
+	wrap.className = 'flow-wrapper';
+	el.parentNode.insertBefore(wrap, el);
+
 	el.className += ' flow-stage';
 	el.style.height = size.height+'px';
+	wrap.appendChild(el);
 
-	total = size.width * slides.length;
+	total = size.width * (slides.length - 1);
 
 	for (var i = 0; i < count; i++) {
 		slides[i].className += ' flow-slide';
@@ -29,6 +34,20 @@ function Flow(el) {
 		}
 		return true;
 	});
+
+	self.getCurrent = function(){
+		return current;
+	};
+
+	self.setCurrent = function(value){
+		if (value < 0) {
+			value = 0;
+		} else if (value > total) {
+			value = total;
+		}
+		current = value;
+		self.update();
+	};
 
 	self.update = function(value){
 		var diff = 0,
@@ -59,13 +78,29 @@ function Flow(el) {
 
 			slides[i].style[xform] = 'translateX('+translateX+'px) translateZ('+translateZ+'px) rotateY('+rotateY+'deg)';
 			slides[i].style.zIndex = count - Math.round(mlide * count);
-			// slides[i].style.opacity = 1 - mlide;
 		}
 	};
 
 	var origin = {x: 0, y: 0},
 		pressed = false,
-		timestamp = null;
+		amplitude = 0,
+		timestamp = null,
+		timeConstant = 250;
+
+	function autoScroll() {
+		var elapsed, delta;
+
+		if (amplitude) {
+			elapsed = Date.now() - timestamp;
+			delta = amplitude * Math.exp(-elapsed / timeConstant);
+			if (delta > 4 || delta < -4) {
+				update(target - delta);
+				requestAnimationFrame(autoScroll);
+			} else {
+				update(target);
+			}
+		}
+	}
 
 	function xpos(e) {
 		if ('targetTouches' in e && e.targetTouches.length >= 1) {
@@ -108,6 +143,7 @@ function Flow(el) {
 			console.log('release', xpos(e), ypos(e));
 			pressed = false;
 			current += origin.x - xpos(e);
+			timestamp = Date.now();
 		}
 
 		if (Math.abs(origin.x - xpos(e)) > 5 || Math.abs(origin.y - ypos(e)) > 5) {

@@ -51,6 +51,17 @@ flst.addEventListener('click', function(e){
 	}
 });
 
+flst.addEventListener('wheel', function(e){
+	e.preventDefault();
+
+	var delta = e.wheelDeltaX;
+	if (delta === 0) {
+		delta = e.wheelDeltaY;
+	}
+
+	flob.setCurrent(flob.getCurrent() - delta);
+});
+
 function resize(e) {
 	document.body.style.height = window.innerHeight+'px';
 }

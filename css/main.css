@@ -52,9 +52,6 @@ body {
 	STAGE
 */
 #stage {
-	position: absolute;
-	bottom: 50px;
-	left: 0;
 	margin-top: 80px;
 }
 #stage li {
@@ -89,14 +86,17 @@ body {
 /*
 	FLOW
 */
-.flow-stage {
-	width: 100%;
-	font-size: 0;
-	white-space: nowrap;
+.flow-wrapper {
+	width:100%;
 	perspective: 500px;
 	-webkit-perspective: 500px;
 	transform-style: preserve-3d;
 	-webkit-transform-style: preserve-3d;
+}
+.flow-stage {
+	width: 100%;
+	font-size: 0;
+	white-space: nowrap;
 	-webkit-user-select: none;
 	-khtml-user-select: none;
 	-moz-user-select: moz-none;
