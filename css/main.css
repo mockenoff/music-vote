@@ -14,8 +14,9 @@ html, body, img, form, input, header, nav, div, ul, li, h1, h2, h3, h4, span, p,
 	GENERAL
 */
 body {
-	font-family: Helvetica, Arial, sans-serif;
+	overflow: hidden;
 	line-height: 150%;
+	font-family: Helvetica, Arial, sans-serif;
 	background:-o-linear-gradient(top, #040429, #257eb7);
 	background:-ms-linear-gradient(top, #040429, #257eb7);
 	background:-moz-linear-gradient(top, #040429, #257eb7);
@@ -23,6 +24,14 @@ body {
 	background:linear-gradient(top, #040429, #257eb7);
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorStr='#040429', EndColorStr='#257eb7');
 	-ms-filter:"progid:DXImageTransform.Microsoft.gradient(startColorStr='#040429', EndColorStr='#257eb7')";
+}
+
+#play {
+	width: 0;
+	height: 0;
+	overflow: hidden;
+	position: absolute;
+	pointer-events: none;
 }
 
 /*
@@ -43,6 +52,9 @@ body {
 	STAGE
 */
 #stage {
+	position: absolute;
+	bottom: 50px;
+	left: 0;
 	margin-top: 80px;
 }
 #stage li {
@@ -51,6 +63,10 @@ body {
 	width: 320px;
 	height: 180px;
 }
+	#stage li img {
+		width: 100%;
+		height: 100%;
+	}
 
 #stage li:after {
 	content: '';

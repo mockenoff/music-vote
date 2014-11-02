@@ -1,7 +1,7 @@
 function Flow(el) {
 	var self = this,
 		total = 0,
-		current = 1280,
+		current = 0,
 		slides = el.querySelectorAll('li'),
 		count = slides.length,
 		xform = 'transform',
@@ -108,6 +108,10 @@ function Flow(el) {
 			console.log('release', xpos(e), ypos(e));
 			pressed = false;
 			current += origin.x - xpos(e);
+		}
+
+		if (Math.abs(origin.x - xpos(e)) > 5 || Math.abs(origin.y - ypos(e)) > 5) {
+			e.stopPropagation();
 		}
 	}
 
